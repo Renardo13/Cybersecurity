@@ -10,5 +10,5 @@ Scrapping is to parse html pages automaticcaly to take open data from a website.
 
 We can do a Python script for that.
 
-We will use beautiful soup to parse html data
+We will use beautiful soup to parse html data and download image
 
