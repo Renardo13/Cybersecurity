@@ -12,3 +12,5 @@ We can do a Python script for that.
 
 We will use beautiful soup to parse html data
 
+The term spider in like crawler. Need to have all the url contein in a parent folder.
+
