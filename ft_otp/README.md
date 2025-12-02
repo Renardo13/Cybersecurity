@@ -14,9 +14,7 @@ We use Big endian for the calcul -> The bits are read from the left to the right
 
 ---
 
-## Algorithm 
-
-***Key points***
+## Algorithm ***Key points***
 
 ***Step 1*** HMAC-SHA1: Generate a 20-byte (160-bit) HMAC using the secret key and the counter.
 The secret key should be shared between the server and the person, its has to be *128* bits size minimum but 160 is better.
@@ -66,4 +64,8 @@ OTP = 880921      |   (6 digit value)
 ```
 ---
 
-The formula is : HOTP=Truncate(HMAC-SHA-1(K,C))mod10^6
+## Conclusion
+
+We can resume the formula like that : 
+
+### ***The formula is : HOTP=Truncate(HMAC-SHA-1(K,C))mod10^6***
