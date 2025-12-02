@@ -5,19 +5,65 @@
 
 OTP -> "One-Time Password"
 
-Based on the HMAC-Based One-Time Password (HOTP) algorithm.
+Based on the HMAC-Based One-Time Password (HOTP) algorithm. The H is for HMAC.
+Difference with TOTP that use a seed to generate new passeword.
 
 This is used for 2 factors authentification (2fa).
+
+We use Big endian for the calcul -> The bits are read from the left to the right, the left is the most significant bit
 
 ---
 
 ## Algorithm 
 
-The HOTP value must be at least a 6-digit value.
+***Key points***
 
-Based on a shared value between user and server.
+***Step 1*** HMAC-SHA1: Generate a 20-byte (160-bit) HMAC using the secret key and the counter.
+The secret key should be shared between the server and the person, its has to be *128* bits size minimum but 160 is better.
+The counter increment at each time a new passeword is generated.
+```
+We take decimal value for more clarity
+Bytes # :  0   1   2    3   4   5    6    7   8   9   10   11   12   13   14   15   16   17   18   19
+Value :   31   134 152  105 14  2    202  22  97  133 80   239  127  25   218  142  148  91   85   90
+```
 
-The algorithm MUST use a strong shared secret.  
-The length of the shared secret MUST be at least 128 bits.
-
+***Step 2*** Dynamic Truncation: Instead of always taking the same 4 bytes, choose a dynamic offset based on the *low 4 bits* of the *last byte* of the HMAC to make it less predictable
+```
+Dynamic truncation because we never take the same bits.
 ---
+Last byte is 90
+in Binary 90 is 01011010.
+Bits Less significant -> 1010.
+1010 is 10 in decimal.
+10 is our offset
+```
+
+***Step 3*** Extract 4 bytes: Take 4 consecutive bytes starting from this offset → this gives 31 significant bits (the most significant bit is masked to avoid signed integer issues).
+```
+So, we take the 4 bytes since the offset (10 in our exemple) -> since the 10th bytes
+Bytes 10, 11, 12, 13 = 80, 239, 127, 25.
+This is a total of 32 bits (4 Bytes* 8bits)
+We take only the 31 bits to prevent to be interpreted as a negative value. The first bit should be 0.
+Ex :
+01010000 (0x50) -> 80 in decimal
+AND
+01111111  (0x7F) -> 127 in decimal
+----------
+00000000  = 0
+So we do val & 0x7F
+---
+val = (80 << 24) + (239 << 16) + (127 << 8) + 25
+     = 1342177280 + 15663104 + 32512 + 25
+     = 1357880921
+```
+
+***Step 4*** Modulo: Compute code % 10^digits to reduce the number to a 6-digit OTP (or more if desired).
+The HOTP value must be at least a 6-digit value
+
+```
+OTP = val & 10^6  |   (1 000 000)
+OTP = 880921      |   (6 digit value)
+```
+---
+
+The formula is : HOTP=Truncate(HMAC-SHA-1(K,C))mod10^6
