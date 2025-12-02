@@ -32,7 +32,7 @@ The output is a new password OTP.
 
 ## Algorithm : ***Key points to code it***
 
-***Step 1*** HMAC-SHA1: Generate a 20-byte (160-bit) HMAC using the secret key and the counter.
+***Step 1*** HMAC-SHA1: Generate a 20-byte (160-bit) HMAC ***using the secret key*** and the counter.
 The secret key should be shared between the server and the person, its has to be *128* bits size minimum but 160 is better.
 The counter increment at each time a new passeword is generated.
 ```
