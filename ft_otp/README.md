@@ -1,4 +1,4 @@
-# ft_otp
+# ft_otp (RFC 4226)
 
 
 ## Introduction
@@ -6,15 +6,29 @@
 OTP -> "One-Time Password"
 
 Based on the HMAC-Based One-Time Password (HOTP) algorithm. The H is for HMAC.
-Difference with TOTP that use a seed to generate new passeword.
+Difference with TOTP that use "time" to generate new passeword.
 
 This is used for 2 factors authentification (2fa).
 
 We use Big endian for the calcul -> The bits are read from the left to the right, the left is the most significant bit
 
 ---
+## Prerequisites / Usage
 
-## Algorithm ***Key points***
+### 1. Generate an encrypted key
+Before using the OTP generator, you need a secret key. You can provide a hexadecimal key (at least 64 characters) to generate an **encrypted key file**:
+
+```bash
+python3 ft_otp.py -g YOUR_HEX_KEY
+```
+The output is a ft_otp.key that just appeared in the folder.
+You can now use it.
+```bash
+python3 ft_otp.py -k ft_otp.key
+```
+The output is a new password OTP.
+
+## Algorithm ***Key points to code it***
 
 ***Step 1*** HMAC-SHA1: Generate a 20-byte (160-bit) HMAC using the secret key and the counter.
 The secret key should be shared between the server and the person, its has to be *128* bits size minimum but 160 is better.
@@ -29,8 +43,7 @@ Value :   31   134 152  105 14  2    202  22  97  133 80   239  127  25   218  1
 ```
 Dynamic truncation because we never take the same bits.
 ---
-Last byte is 90
-in Binary 90 is 01011010.
+Last byte is 90 -> in Binary 90 is 01011010.
 Bits Less significant -> 1010.
 1010 is 10 in decimal.
 10 is our offset
