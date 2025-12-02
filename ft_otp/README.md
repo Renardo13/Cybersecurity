@@ -25,6 +25,7 @@ python3 ft_otp.py -g YOUR_HEX_KEY
 ```
 The output is a ft_otp.key that just appeared in the folder.
 You can now use it.
+PS : The secret key enter by the user should be shared between the server and the person, its has to be __128__ bits size minimum but 160 is better.
 ```bash
 python3 ft_otp.py -k ft_otp.key
 ```
@@ -33,8 +34,7 @@ The output is a new password OTP.
 ## Algorithm : ***Key points to code it***
 
 ***Step 1*** HMAC-SHA1: Generate a 20-byte (160-bit) HMAC __using the secret key__ and the __counter__.
-The secret key should be shared between the server and the person, its has to be __128__ bits size minimum but 160 is better.
-The counter increment at each time a new passeword is generated.
+PS : The counter increment at each time a new passeword is generated.
 ```
 We take decimal value for more clarity
 Bytes # :  0   1   2    3   4   5    6    7   8   9   10   11   12   13   14   15   16   17   18   19
@@ -84,3 +84,30 @@ OTP = 880921      |   (6 digit value)
 We can resume with the formula : 
 
 ### ***HOTP=Truncate(HMAC-SHA-1(K,C))mod10^6***
+
+### Good to know
+
+# ft_otp Key Handling
+
+- The key is **not stored as raw hexadecimal** in the program when you enter it.  
+- When you pass a key to the Python script, it is always received as a **string** (`str`).  
+
+Example:
+
+```bash
+python3 ft_otp.py -g 35483176234978369723dhgfsdhfsagdhdsfhdfdfdgfshdgjhsgdfsf438756438765873465387465
+
+So you have to convert it before using it
+# If key is hexadecimal
+key_bytes = bytes.fromhex(hex_key)
+
+# If key is plain text
+key_bytes = key_str.encode()
+
+To make good conversion here is a tab with corresponding values ->
+| Base                  | Bits par caractère |
+| --------------------- | ------------------ |
+| Binaire (base 2)      | 1 bit              |
+| Octal (base 8)        | 3 bits             |
+| Décimal (base 10)     | ~3.32 bits         |
+| Hexadécimal (base 16) | 4 bits             | 
