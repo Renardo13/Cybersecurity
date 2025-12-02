@@ -81,6 +81,6 @@ OTP = 880921      |   (6 digit value)
 
 ## Conclusion
 
-We can resume the formula like that : 
+We can resume with the formula : 
 
-### ***The formula is : HOTP=Truncate(HMAC-SHA-1(K,C))mod10^6***
+### ***HOTP=Truncate(HMAC-SHA-1(K,C))mod10^6***
