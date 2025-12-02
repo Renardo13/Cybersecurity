@@ -81,8 +81,8 @@ def main():
         if not all(c in "0123456789abcdefABCDEF" for c in key):
             print("Error: key must be a hexadecimal string.")
             sys.exit(1)
-        if len(key) != 32:
-            print("Error: key must be exactly 32 hexadecimal characters (128 bits).")
+        if len(key) < 32:
+            print("Error: key must be at least 32 hexadecimal characters (128 bits).")
             sys.exit(1)
         save_key(key)
 
@@ -93,7 +93,7 @@ def main():
 
         key = load_key(args.k)
         otp = generate_hotp(key)
-        print("Your HOTP is:", otp)
+        print(otp)
 
 if __name__ == "__main__":
     main()
