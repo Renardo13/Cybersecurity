@@ -32,8 +32,8 @@ The output is a new password OTP.
 
 ## Algorithm : ***Key points to code it***
 
-***Step 1*** HMAC-SHA1: Generate a 20-byte (160-bit) HMAC *using the secret key* and the *counter*.
-The secret key should be shared between the server and the person, its has to be *128* bits size minimum but 160 is better.
+***Step 1*** HMAC-SHA1: Generate a 20-byte (160-bit) HMAC __using the secret key__ and the __counter__.
+The secret key should be shared between the server and the person, its has to be __128__ bits size minimum but 160 is better.
 The counter increment at each time a new passeword is generated.
 ```
 We take decimal value for more clarity
@@ -41,7 +41,7 @@ Bytes # :  0   1   2    3   4   5    6    7   8   9   10   11   12   13   14   1
 Value :   31   134 152  105 14  2    202  22  97  133 80   239  127  25   218  142  148  91   85   90
 ```
 
-***Step 2*** Dynamic Truncation: Instead of always taking the same 4 bytes, choose a dynamic offset based on the *low 4 bits* of the *last byte* of the HMAC to make it less predictable
+***Step 2*** Dynamic Truncation: Instead of always taking the same 4 bytes, choose a dynamic offset based on the __low 4 bits__ of the __last byte__ of the HMAC to make it less predictable
 ```
 Dynamic truncation because we never take the same bits.
 ---
