@@ -1,0 +1,29 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: onion
+    ports:
+      - "8080:80"
+    # Replace the original .conf file and .html file from nginx by our files :
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+    #Your PC                          Docker container
+#------------------   ---------------------------------------
+#./index.html     →   /usr/share/nginx/html/index.html
+            # (mounted in read-only -> "ro")
+# The 2 point ":" mean replace by our html file
+    restart: unless-stopped
+
+#------------------ Tor ---------------------------------------
+
+
+  tor:
+    image: dperson/torproxy
+    container_name: tor
+    depends_on:
+      - nginx
+    volumes:
+      # Bind mount local pour conserver le service onion
+      - ./torrc:/etc/tor/torrc:ro
+    restart: unless-stopped
