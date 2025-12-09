@@ -24,9 +24,9 @@ The 42 Cybersecurity Pool is an intensive program designed to immerse students i
 
 ---
 
-## 4. Required Projects
+### Projects
 
-### 4.1 Cybersecurity – arachnida (Web)
+### Arachnida (Web)
 Introduction to **web pentesting**.  
 Skills:
 - Web application analysis.  
@@ -36,7 +36,7 @@ Objective: Think like an attacker and understand how web apps can be exploited.
 
 ---
 
-### 4.2 Cybersecurity – ft_otp (OTP / Cryptography)
+### ft_otp (OTP / Cryptography)
 Implement a **One-Time Password system**.  
 Skills:
 - TOTP/HOTP standards.  
@@ -47,7 +47,7 @@ Objective: Understand OTP mechanics and risks of poor implementation.
 
 ---
 
-### 4.3 Cybersecurity – ft_onion (Web / Hardening)
+### ft_onion (Web / Hardening)
 Explore **hidden services and multi-layered architecture**.  
 Skills:
 - Reverse proxies, tunnels, multi-layer networking.  
@@ -57,7 +57,7 @@ Objective: Handle and secure a compartmentalized web architecture.
 
 ---
 
-### 4.4 Cybersecurity – Reverse me (Reverse Engineering)
+### Reverse me (Reverse Engineering)
 Introduction to **reverse engineering**.  
 Skills:
 - Binary analysis with tools (objdump, gdb, Ghidra, radare2).  
@@ -67,7 +67,7 @@ Objective: Learn to deconstruct executables and uncover hidden behavior.
 
 ---
 
-### 4.5 Cybersecurity – Stockholm (Malware)
+### Stockholm (Malware)
 Study and analyze a **simple malware**.  
 Skills:
 - Observe malware behavior.  
@@ -78,7 +78,7 @@ Objective: Understand malware behavior and safe analysis techniques.
 
 ---
 
-### 4.6 Cybersecurity – Inquisitor (Network)
+### Inquisitor (Network)
 Focus on **network monitoring and analysis**.  
 Skills:
 - Packet capture and analysis (Wireshark, tcpdump).  
@@ -89,7 +89,7 @@ Objective: Develop network analyst skills and SOC mindset.
 
 ---
 
-### 4.7 Cybersecurity – Vaccine (Web)
+### Vaccine (Web)
 Advanced project on **patching and securing web applications**.  
 Skills:
 - Identify vulnerabilities in existing applications.  
