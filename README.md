@@ -27,12 +27,15 @@ The 42 Cybersecurity Pool is an intensive program designed to immerse students i
 ### Projects
 
 ### Arachnida (Web)
-Introduction to **web pentesting**.  
-Skills:
-- Web application analysis.  
-- Classic vulnerabilities: XSS, SQL/command injection, misconfigurations.  
-- Enumeration and light brute-forcing.  
-Objective: Think like an attacker and understand how web apps can be exploited.
+
+Introduction to **web scraping**.  
+
+**Skills:**  
+- Extracting and collecting data from web pages  
+- Parsing HTML structures and identifying relevant elements  
+- Managing requests, headers, and session handling
+**Objective:**  
+Build a tool capable of automatically retrieving images on the target website.
 
 ---
 
@@ -42,7 +45,6 @@ Skills:
 - TOTP/HOTP standards.  
 - HMAC, SHA-1, shared secrets.  
 - Secure OTP generator implementation.  
-- Time handling and Base32 encoding.  
 Objective: Understand OTP mechanics and risks of poor implementation.
 
 ---
