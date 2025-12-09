@@ -24,7 +24,7 @@ The 42 Cybersecurity Pool is an intensive program designed to immerse students i
 
 ---
 
-### Projects
+# Projects
 
 ### Arachnida (Web)
 
