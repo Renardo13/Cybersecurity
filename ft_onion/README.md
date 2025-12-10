@@ -11,7 +11,7 @@
       - Redirects .onion requests to Nginx
       - Uses default Tor port 9050 for internal communication
     - SSH (sshd)
-      - Allows remote connection for administration
+      - Allows remote connection for administration that can be root
       - Listens on port 4242
       - Provides a terminal session inside the container
 
