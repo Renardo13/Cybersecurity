@@ -1,4 +1,4 @@
-# Hosting a .onion Site with Tor
+# ft_onion
 
 ## Docker Project Architecture
 
@@ -46,6 +46,18 @@
 | IP Exposure             | Can reveal server IP          | Server IP hidden via Tor    |
 
 ---
+
+## Configure tor in your docker
+
+#### In torrc
+`HiddenServicePort 80 127.0.0.1:80` means: `HiddenServicePort <hidden-service-port> <target-address>:<target-port>`
+
+
+- The Tor hidden service will listen on **port 80** for `.onion` requests.
+- Any request received by Tor on this hidden service port is **forwarded to `127.0.0.1:80`**, which is where **Nginx** is running inside the container.
+- Essentially, Tor acts as a **bridge** between the Tor network and your local web server.
+
+This makes it clear that Tor doesn’t serve the page itself—it just redirects traffic to Nginx.
 
 # Usage
 

@@ -1,10 +1,12 @@
+version: "3.9"
+
 services:
   nginx:
-    build: .  # construit l'image à partir de ton Dockerfile
-    container_name: onion
+    build: .
+    container_name: nginx
     ports:
-      - "4342:4242"  # SSH
-      - "8080:80"    # Nginx
+      - "4342:4242"  # SSH access to container
+      - "8080:80"    # HTTP access to Nginx
     volumes:
       - ./index.html:/usr/share/nginx/html/index.html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
@@ -15,5 +17,11 @@ services:
     image: dperson/torproxy
     container_name: tor
     depends_on:
-      - onion
+      - nginx
+    volumes:
+      - tor_hidden:/var/lib/tor/hidden_service
+      - ./torrc:/etc/tor/torrc:ro
     restart: unless-stopped
+
+volumes:
+  tor_hidden:
