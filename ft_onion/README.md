@@ -1,21 +1,21 @@
 # Hosting a .onion Site with Tor
 
-# Docker Project Architecture
+Docker Project Architecture
 
 Your PC (host)
- └─> Docker Container (server)
-       ├─ Nginx (web server)
-       │    ├─ Serves the static site `index.html`
-       │    └─ Listens on port **80**
-       │
-       ├─ Tor (anonymization service)
-       │    ├─ Redirects `.onion` requests to Nginx
-       │    └─ Uses default Tor port **9050** for internal communication
-       │
-       └─ SSH (sshd)
-            ├─ Allows remote connection for administration
-            ├─ Listens on port **4242**
-            └─ Provides a terminal session inside the container as if it were a separate server
+ └── Docker Container (server)
+      ├── Nginx (web server)
+      │     ├── Serves the static site "index.html"
+      │     └── Listens on port 80
+      │
+      ├── Tor (anonymization service)
+      │     ├── Redirects .onion requests to Nginx
+      │     └── Uses default Tor port 9050 for internal communication
+      │
+      └── SSH (sshd)
+            ├── Allows remote connection for administration
+            ├── Listens on port 4242
+            └── Provides a terminal session inside the container as if it were a separate server
 
 
 ## What is a `.onion` Address?
