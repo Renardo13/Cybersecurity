@@ -1,7 +1,7 @@
 services:
   nginx:
     build: .  # construit l'image à partir de ton Dockerfile
-    container_name: nginx
+    container_name: onion
     ports:
       - "4342:4242"  # SSH
       - "8080:80"    # Nginx
