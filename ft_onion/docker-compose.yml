@@ -1,29 +1,19 @@
 services:
   nginx:
-    image: nginx:latest
-    container_name: onion
+    build: .  # construit l'image à partir de ton Dockerfile
+    container_name: nginx
     ports:
-      - "8080:80"
-    # Replace the original .conf file and .html file from nginx by our files :
+      - "4342:4242"  # SSH
+      - "8080:80"    # Nginx
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./index.html:/usr/share/nginx/html/index.html:ro
-    #Your PC                          Docker container
-#------------------   ---------------------------------------
-#./index.html     →   /usr/share/nginx/html/index.html
-            # (mounted in read-only -> "ro")
-# The 2 point ":" mean replace by our html file
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./torrc:/etc/tor/torrc:ro
     restart: unless-stopped
-
-#------------------ Tor ---------------------------------------
-
 
   tor:
     image: dperson/torproxy
     container_name: tor
     depends_on:
-      - nginx
-    volumes:
-      # Bind mount local pour conserver le service onion
-      - ./torrc:/etc/tor/torrc:ro
+      - onion
     restart: unless-stopped

@@ -15,4 +15,7 @@ down: stop
 clear:
 	@docker compose down -v
 
+prune:
+	@docker volume prune -f
+
 .PHONY: up build rebuild stop down clear

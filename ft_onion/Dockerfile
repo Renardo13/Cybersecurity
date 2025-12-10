@@ -9,13 +9,13 @@ RUN apt-get update && \
 RUN sed -i 's/#Port 22/Port 4242/' /etc/ssh/sshd_config && \
     echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 
-# Copier ton index.html et nginx.conf
-COPY index.html /var/www/html/index.html
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copier fichiers
+COPY index.html /usr/share/nginx/html/index.html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY torrc /etc/tor/torrc
 
-# Exposer les ports
-EXPOSE 80 4242
+# Exposer ports
+EXPOSE 4242 80
 
-# Lancer les services
-CMD service ssh start && service nginx start && tor -f /etc/tor/torrc && tail -f /dev/null
+# Lancer services en parallèle
+CMD /usr/sbin/sshd -D & nginx -g 'daemon off;' & tor -f /etc/tor/torrc
