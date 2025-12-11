@@ -1,5 +1,7 @@
 # Reverse me
 
+## GDB syntax
+
 | Operand Type            | GDB Syntax          | Example             | Stored Where?                       | Notes                                                                |
 | ----------------------- | ------------------- | ------------------- | ----------------------------------- | -------------------------------------------------------------------- |
 | **Register**            | `$<reg>`            | `$eax`, `$ebx`      | CPU register                        | Fastest access; no memory read/write                                 |
@@ -24,4 +26,4 @@
 | ------------- | -------------- | ------------------- | ------------------------------------------------------------------------------------------------------- |
 | **`%`**       | `%eax`, `%ebx` | **Register**        | Inside the **CPU**, not in RAM. Holds values like counters, pointers, flags. Fastest access.            |
 | **`$`**       | `$0x0`, `$42`  | **Immediate value** | Encoded **in the instruction**. Never in MEMORY !.                                       |
-| *(no prefix)* | `0x5655623a`   | **Memory address**  | Points to a location in **process memory** (stack, heap, .rodata, etc.). Dereference to access content. |
+| *(no prefix)* | `0x5655623a`   | **Memory address**  | Points to a location in **process memory** RAM : (stack, heap, .rodata, etc.). Dereference to access content. |
