@@ -54,92 +54,27 @@ level1: ELF 32-bit LSB pie executable, Intel 80386, version 1 (SYSV), dynamicall
 
 Because it will impact your analyze with gdb. Here this is 32bits. There are not the same registers names. And size of registers are differents. (32bits registers -> 4 bytes)
 
-## Level1
 
-```bash
-$ ./level1
-Please enter key: test
-Nope.
-```
-We know that this is a comparison that is done.
+## Understanding EBX and .rodata in 32-bit PIE Binaries
 
-Let's reverse this.
+In a 32-bit **PIE (Position Independent Executable)** binary, memory layout is dynamic. One of the important segments is **`.rodata`**, which stores **read-only data** like:
 
+- Strings and messages (`"Please enter key"`, `"Good job."`, `"Nope."`)  
+- Constants used by the program  
 
-`gdb ./level1`
+The CPU uses **registers** to keep track of addresses. In this context:
 
-`(gdb) disas main`
+**EBX = Pointer to `.rodata`**
 
-```bash
-...
-call strcmp
-cmp $0x0, %eax
-...
-```
+---
 
-So we know that the real key is in the program because it compares it with the input of the user.
+## How EBX Works
 
-Here is the interesting sequence, seem to be a flag/key construction
-```text
-   0x000011e0 <+32>:    mov    -0x1ff8(%ebx),%eax
-   0x000011e6 <+38>:    mov    %eax,-0x7a(%ebp)
-   0x000011e9 <+41>:    mov    -0x1ff4(%ebx),%eax
-   0x000011ef <+47>:    mov    %eax,-0x76(%ebp)
-   0x000011f2 <+50>:    mov    -0x1ff0(%ebx),%eax
-   0x000011f8 <+56>:    mov    %eax,-0x72(%ebp)
-   0x000011fb <+59>:    mov    -0x1fec(%ebx),%ax
-   0x00001202 <+66>:    mov    %ax,-0x6e(%ebp)
-   0x00001206 <+70>:    lea    -0x1fea(%ebx),%eax
-   0x0000120c <+76>:    mov    %eax,(%esp)
-   0x0000120f <+79>:    call   0x1060 <printf@plt>
-```
+- When a PIE binary starts, the **exact location of `.rodata` is unknown** because the program can be loaded at different addresses in memory.  
+- The program calculates the base address of `.rodata` at runtime.  
+- **EBX stores this base address**.
 
-### Important 
+### Accessing Data in `.rodata`
 
-This syntax is like **a function call** in reality : `instruction source, destination`
+Each string or constant in `.rodata` is accessed with an **offset from EBX**:
 
-`-0x7a(%ebp)` it means offset(register)
-
-> `Adresse = EBP - 0x7A`
-
-So like we are in AT&T syntax 
-`0x000011e0 <+32>:    mov    -0x1ff8(%ebx),%eax` means put content of addr %ebx - 0x8 and put it in eax.
-
-
-So we can separate all the line by 4 important operation that do the same logic :
-
-```bash
-0x000011e0 <+32>:    mov    -0x1ff8(%ebx),%eax -> Copy -0x1ff8(%ebx) in eax, 
-0x000011e6 <+38>:    mov    %eax,-0x7a(%ebp)   -> Copy eax in -0x7a(%ebp). START OF THE STRING
-
-0x000011e9 <+41>:    mov    -0x1ff4(%ebx),%eax
-0x000011ef <+47>:    mov    %eax,-0x76(%ebp)
-
-0x000011f2 <+50>:    mov    -0x1ff0(%ebx),%eax
-0x000011f8 <+56>:    mov    %eax,-0x72(%ebp)
-
-0x000011fb <+59>:    mov    -0x1fec(%ebx),%ax
-0x00001202 <+66>:    mov    %ax,-0x6e(%ebp)
-
-eax is just a temporary register to store the value.
-All the flag/key is stored in ebp.
-```
-
-If we reconstitute the ebp register we can add the 4 bytes.
-
-START -> -0x7a(%ebp) -> ebp - 0x7a
-
-No need to calculate any adress here or maths, GDB do its for you.
-
-## Response 
-
-```bash
-(gdb) x/s $ebp-0x7a
-0xffffc8fe:     "__stack_check"
-```
-
-Why we do x/s to print the key. We use the offset of the adress ebp.
-> `x` is examine the memory
-> `/s` is the format string
-
-"__stack_check" is our flag
