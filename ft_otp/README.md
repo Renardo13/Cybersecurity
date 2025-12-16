@@ -89,8 +89,7 @@ We can resume with the formula :
 
 # ft_otp Key Handling
 
-- The key is **not stored as raw hexadecimal** in the program when you enter it.  
-- When you pass a key to the Python script, it is always received as a **string** (`str`).  
+- The key is **not stored as raw hexadecimal** in the program when you enter it, because the shell considerate it as character and not number -> When you pass a key to the Python script, it is always received as a **string** (`str`).  
 
 Example:
 
