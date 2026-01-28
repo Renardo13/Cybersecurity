@@ -18,7 +18,7 @@ We use Big endian for the calcul -> The bits are read from the left to the right
 You must use python3
 
 ### 1. Generate an encrypted key
-Before using the OTP generator, you need a secret key. You can provide a hexadecimal key (at least 64 characters) to generate an **encrypted key file**:
+Before using the OTP generator, you need a secret key to share between you and the server. You can provide a hexadecimal key (at least 64 characters) to generate an **encrypted key file**:
 
 ```bash
 python3 ft_otp.py -g YOUR_HEX_KEY
@@ -89,8 +89,7 @@ We can resume with the formula :
 
 # ft_otp Key Handling
 
-- The key is **not stored as raw hexadecimal** in the program when you enter it.  
-- When you pass a key to the Python script, it is always received as a **string** (`str`).  
+- The key is **not stored as raw hexadecimal** in the program when you enter it, because the shell considerate it as character and not number -> When you pass a key to the Python script, it is always received as a **string** (`str`).  
 
 Example:
 
